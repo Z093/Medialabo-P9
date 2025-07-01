@@ -1,15 +1,36 @@
+version: '3.8'
+
 services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: patientdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   mongodb:
     image: mongo:6.0
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     networks:
       - backend-net
-    ports:
-      - "27017:27017"
 
   mongo-express:
     image: mongo-express:1.0.2
@@ -34,9 +55,14 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - mongodb
+      mysql:
+        condition: service_healthy
     networks:
       - backend-net
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/patientdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
 
   notes-service:
     build:
@@ -70,12 +96,13 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - patient-service      # attendez que les micro-services soient prêts
+      - patient-service
       - notes-service
     networks:
       - backend-net
 
 volumes:
+  mysql-data:
   mongo-data:
 
 networks:

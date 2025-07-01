@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AssessmentResult {
-    private String patientId;
+    private int patientId;
     private String riskLevel;
 }
 

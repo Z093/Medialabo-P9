@@ -21,15 +21,12 @@ public class AssessmentController {
     }
 
     @GetMapping("/{patientId}")
-    public AssessmentResult assessPatient(@PathVariable String patientId) {
+    public AssessmentResult assessPatient(@PathVariable int patientId) {
         return service.assessRisk(patientId);
     }
 }
 
-//@GetMapping("/{patientId}")
-//public AssessmentResult assessPatient(@PathVariable String patientId) {
-  //  return service.assessRisk(patientId);
-//}
+
 
 
 

@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
 @Data
 public class PatientDto {
-    private String id;
+    private int id;
     private String gender;
     private String birthDate; // Format attendu : "YYYY-MM-DD"
 

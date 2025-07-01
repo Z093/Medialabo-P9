@@ -22,7 +22,7 @@ public class AssessmentService {
             "anormal", "cholesterol", "vertiges", "rechute", "reaction", "anticorps"
     );
 
-    public AssessmentResult assessRisk(String patientId) {
+    public AssessmentResult assessRisk(int patientId) {
         try {
             String patientUrl = "http://patient-service:8082/patient/" + patientId;
             String notesUrl = "http://notes-service:8083/notes/patient/" + patientId;

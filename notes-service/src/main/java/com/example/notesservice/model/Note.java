@@ -9,12 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Note {
     @Id
     private String id;
-    private String patientId;
+    private int patientId;
     private String content;
 
     public Note() {}
 
-    public Note(String patientId, String content) {
+    public Note(int patientId, String content) {
         this.patientId = patientId;
         this.content = content;
     }
