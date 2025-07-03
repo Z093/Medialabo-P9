@@ -101,6 +101,19 @@ services:
     networks:
       - backend-net
 
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - patient-service
+      - notes-service
+      - assessment-service
+    networks:
+      - backend-net
+
 volumes:
   mysql-data:
   mongo-data:

@@ -21,14 +21,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain springSecurityFilterChain(org.springframework.security.config.web.server.ServerHttpSecurity http) {
         http
-                .csrf().disable()
-                .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/patients/**", "/notes/**", "/risk/**").authenticated()
+                .csrf(csrf -> csrf.disable())
+                .authorizeExchange(exchange -> exchange
                         .anyExchange().permitAll()
-                )
-                .httpBasic();
+                );
         return http.build();
     }
 }

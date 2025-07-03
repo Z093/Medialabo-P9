@@ -25,4 +25,6 @@ public class NoteController {
     public ResponseEntity<Note> create(@RequestBody Note note) {
         return ResponseEntity.ok(service.addNote(note));
     }
+
+
 }

@@ -6,20 +6,25 @@ spring:
     gateway:
       routes:
         - id: patient-route
-          uri: http://patient-service:8082     # pointant sur votre service patient
+          uri: http://patient-service:8082
           predicates:
-            - Path=/patients/**
+            - Path=/patient/**
           filters:
-            # on enlève /patients et on forwarde le reste à la racine du micro-service
-            - RewritePath=/patients/(?<segment>.*), /${segment}
+            - RewritePath=/patient/(?<segment>.*), /patient/${segment}
 
         - id: notes-route
-          uri: http://notes-service:8083       # pointant sur votre service notes
+          uri: http://notes-service:8083
           predicates:
             - Path=/notes/**
           filters:
-            # idem pour les notes
-            - RewritePath=/notes/(?<segment>.*), /${segment}
+            - RewritePath=/notes/(?<segment>.*), /notes/${segment}
+
+        - id: assessment-route
+          uri: http://assessment-service:8084
+          predicates:
+            - Path=/assess/**
+          filters:
+            - RewritePath=/assess/(?<segment>.*), /assess/${segment}
 
   autoconfigure:
     exclude:
